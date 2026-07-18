@@ -5,7 +5,6 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def read_json_file(filename):
     """
     Читает данные из JSON-файла формата 4.
@@ -74,10 +73,7 @@ def main():
     )
 
     args = parser.parse_args()
-# Чтение данных
     x_full, y_full = read_json_file(args.input_file)
-
-    # Применяем прореживание (параметр №15) - автоматически
     x, y = apply_thinning(x_full, y_full)
 
     print(f"Загружено точек: {len(x_full)}")
@@ -86,7 +82,6 @@ def main():
     # Создаём график
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Построение с заливкой или без (параметр №14)
     if args.fill:
         ax.fill_between(x, y, color='blue', alpha=0.3, label="Заливка под кривой")
         ax.plot(x, y, color='blue', linewidth=2, label="f(x)")
@@ -94,7 +89,6 @@ def main():
     else:
         ax.plot(x, y, color='blue', linewidth=2, label="f(x)")
         title_suffix = ""
-# Заголовок
     ax.set_title(
         f"График функции f(x) = 100·√(1-0.01·x²) + 0.01·|x+10|\n"
         f"(данные из: {args.input_file}){title_suffix}"
