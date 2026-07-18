@@ -94,4 +94,26 @@ def main():
     else:
         ax.plot(x, y, color='blue', linewidth=2, label="f(x)")
         title_suffix = ""
+# Заголовок
+    ax.set_title(
+        f"График функции f(x) = 100·√(1-0.01·x²) + 0.01·|x+10|\n"
+        f"(данные из: {args.input_file}){title_suffix}"
+    )
+
+    # Подписи осей
+    ax.set_xlabel("x")
+    ax.set_ylabel("f(x)")
+
+    # Сетка
+    ax.grid(True, linestyle='--', alpha=0.7)
+
+    ax.legend()
+
+    # Отображение
+    plt.tight_layout()
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
 
