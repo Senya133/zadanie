@@ -44,5 +44,17 @@ def read_json_file(filename):
         sys.exit(1)
 
     return np.array(x_vals), np.array(y_vals)
-
+def apply_thinning(x, y, max_points=1000):
+    """
+    Применяет прореживание данных (параметр №15).
+    Если точек больше max_points, выбираем равномерно каждую N-ю точку.
+    """
+    if len(x) <= max_points:
+        return x, y
+    
+    step = len(x) // max_points
+    if step < 1:
+        step = 1
+    
+    return x[::step], y[::step]
 
