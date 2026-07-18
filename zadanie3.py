@@ -74,4 +74,24 @@ def main():
     )
 
     args = parser.parse_args()
+# Чтение данных
+    x_full, y_full = read_json_file(args.input_file)
+
+    # Применяем прореживание (параметр №15) - автоматически
+    x, y = apply_thinning(x_full, y_full)
+
+    print(f"Загружено точек: {len(x_full)}")
+    print(f"После прореживания: {len(x)}")
+
+    # Создаём график
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Построение с заливкой или без (параметр №14)
+    if args.fill:
+        ax.fill_between(x, y, color='blue', alpha=0.3, label="Заливка под кривой")
+        ax.plot(x, y, color='blue', linewidth=2, label="f(x)")
+        title_suffix = " (с заливкой)"
+    else:
+        ax.plot(x, y, color='blue', linewidth=2, label="f(x)")
+        title_suffix = ""
 
