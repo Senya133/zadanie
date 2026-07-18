@@ -57,4 +57,21 @@ def apply_thinning(x, y, max_points=1000):
         step = 1
     
     return x[::step], y[::step]
+def main():
+    parser = argparse.ArgumentParser(
+        description="Построение графика функции по данным из JSON-файла. Вариант 14."
+    )
+    parser.add_argument(
+        "input_file",
+        help="Имя файла с входными данными в формате JSON"
+    )
+
+    # Дополнительный параметр (вариант 14)
+    parser.add_argument(
+        "--fill",
+        action="store_true",
+        help="Включить заливку цветом под кривой графика"
+    )
+
+    args = parser.parse_args()
 
