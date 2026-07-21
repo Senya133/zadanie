@@ -1,9 +1,9 @@
 import argparse
 import json
 import sys
-
 import matplotlib.pyplot as plt
 import numpy as np
+
 
 def read_json_file(filename):
     """
@@ -26,36 +26,22 @@ def read_json_file(filename):
     except Exception as e:
         print(f"Ошибка при чтении файла: {e}")
         sys.exit(1)
-
+    # Проверяем наличие ключей 'x' и 'y'
     if 'x' not in data or 'y' not in data:
         print("Ошибка: файл должен содержать ключи 'x' и 'y'.")
+        print("Текущие ключи:", list(data.keys()))
         sys.exit(1)
-
     x_vals = data['x']
     y_vals = data['y']
-
     if not x_vals or not y_vals:
         print("Ошибка: массивы x и y не должны быть пустыми.")
         sys.exit(1)
-
     if len(x_vals) != len(y_vals):
         print("Ошибка: массивы x и y должны иметь одинаковую длину.")
         sys.exit(1)
-
     return np.array(x_vals), np.array(y_vals)
-def apply_thinning(x, y, max_points=1000):
-    """
-    Применяет прореживание данных (параметр №15).
-    Если точек больше max_points, выбираем равномерно каждую N-ю точку.
-    """
-    if len(x) <= max_points:
-        return x, y
-    
-    step = len(x) // max_points
-    if step < 1:
-        step = 1
-    
-    return x[::step], y[::step]
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Построение графика функции по данным из JSON-файла. Вариант 14."
@@ -64,22 +50,14 @@ def main():
         "input_file",
         help="Имя файла с входными данными в формате JSON"
     )
-
-    # Дополнительный параметр (вариант 14)
     parser.add_argument(
         "--fill",
         action="store_true",
         help="Включить заливку цветом под кривой графика"
     )
-
     args = parser.parse_args()
-    x_full, y_full = read_json_file(args.input_file)
-    x, y = apply_thinning(x_full, y_full)
-
-    print(f"Загружено точек: {len(x_full)}")
-    print(f"После прореживания: {len(x)}")
-
-    # Создаём график
+    x, y = read_json_file(args.input_file)
+    print(f"Загружено точек: {len(x)}")
     fig, ax = plt.subplots(figsize=(10, 6))
 
     if args.fill:
@@ -93,21 +71,13 @@ def main():
         f"График функции f(x) = 100·√(1-0.01·x²) + 0.01·|x+10|\n"
         f"(данные из: {args.input_file}){title_suffix}"
     )
-
-    # Подписи осей
+    
     ax.set_xlabel("x")
     ax.set_ylabel("f(x)")
-
-    # Сетка
     ax.grid(True, linestyle='--', alpha=0.7)
-
     ax.legend()
-
-    # Отображение
     plt.tight_layout()
     plt.show()
-
-
+    
 if __name__ == "__main__":
     main()
-
