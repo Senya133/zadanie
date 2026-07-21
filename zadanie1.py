@@ -29,7 +29,7 @@ plt.tight_layout()
 plt.savefig('plot.png', dpi=300)
 plt.show()
 
-print("\nПервые 20 строк:")
+print("Первые 20 строк:")
 with open("results/result_variant_3.json", "r") as f:
     for i, line in enumerate(f):
         if i >= 20:
